@@ -118,7 +118,6 @@ void stereoChorus::onControlChange(int controlIndex)
     case 0: //rate
     {
       freq = 0.5+10*(float)control[0].value/127.0;
-      freq = 5.5;
       lfo1.setFrequency(freq);
       lfo2.setFrequency(freq + beatFrequency);
       break;
@@ -126,7 +125,6 @@ void stereoChorus::onControlChange(int controlIndex)
     case 2: //depth
     {
       depth = 1.49*(float)control[2].value/127.0;
-      depth = 1;
       break;
     }
     case 3: //input mode
@@ -179,7 +177,7 @@ void stereoChorus::process(float* inLeft, float* inRight, float* outLeft, float*
     lfo2.update();
     float dt1 = (1 + lfo1.getOutput())*depth;
     float dt2;
-    if(1) //asynchronous
+    if(control[5].value==0) //asynchronous
       dt2 = (1 + lfo2.getOutput())*depth;
     else  //synchronous
       dt2 = (1 + lfo1.getOutput((float)control[4].value))*depth;
